@@ -89,12 +89,56 @@ namespace WebApi.Tests
         }
 
         [Fact]
+        public async void GetEmployeeTest()
+        {
+           // Employee employee = null;
+
+
+            employeeService.Setup(emp => emp.GetEmployees()).ReturnsAsync(
+                new List<Employee>()
+                {
+                    new Employee()
+                {
+                    EmpID = 1, EmpName="Naval Andhyal",EmpDOB = "20/07/1998",PrevExperience=4,Salary=57000
+                },
+                new Employee()
+                {
+                    EmpID = 2, EmpName="Naval Andhyal1",EmpDOB = "22/07/1998",PrevExperience=4,Salary=60000
+                },
+                new Employee()
+                {
+                    EmpID = 3, EmpName="Naval Andhyal2",EmpDOB = "23/07/1998",PrevExperience=4,Salary=67000
+                },
+                new Employee()
+                {
+                    EmpID = 4, EmpName="Naval Andhyal3",EmpDOB = "24/07/1998",PrevExperience=4,Salary=70000
+                }
+                }
+                );
+
+            //int n = 0;
+            //employeeService.Setup(srvc => srvc.GetEmployee(It.IsAny<int>())).Callback<int>(x => n = x);
+            Employee existingEmployee = new()
+            {
+                EmpID = 3,
+                EmpName = "Naval Andhyal2",
+                EmpDOB = "23/07/1998",
+                PrevExperience = 4,
+                Salary = 67000
+            };
+            Employee gotEmployee = employeeService.Object.GetEmployees().Result.Find(emp => emp.EmpID == 3);
+            //if()
+            //Assert
+            //employeeService.Verify(x => x.GetEmployee(It.IsAny<int>()), Times.Once);
+            Assert.Equal(gotEmployee.EmpID, existingEmployee.EmpID);
+            Assert.Equal(gotEmployee.EmpName, existingEmployee.EmpName);
+            Assert.Equal(gotEmployee.EmpDOB, existingEmployee.EmpDOB);
+            Assert.Equal(gotEmployee.PrevExperience, existingEmployee.PrevExperience);
+            Assert.Equal(gotEmployee.Salary, existingEmployee.Salary);
+        }
+        [Fact]
         public async void GetAllEmployeesTest()
         {
-            /*
-             * var response = waktu.Setup(x => 
-        x.GetAsyncSet()).Returns(Task.FromResult(request));
-             */
 
             employeeService.Setup(emp => emp.GetEmployees()).ReturnsAsync(
                 new List<Employee>()
@@ -118,7 +162,7 @@ namespace WebApi.Tests
                 }
                 );
             var GetAllEmployeesResult = await employeeService.Object.GetEmployees();
-            var GetEmployeeResult = await employeeService.Object.GetEmployee(3);
+            //var GetEmployeeResult = await employeeService.Object.GetEmployee(3);
 
             Assert.True(GetAllEmployeesResult.Count == 4);
             //Assert.IsType<Employee>(GetEmployeeResult);
