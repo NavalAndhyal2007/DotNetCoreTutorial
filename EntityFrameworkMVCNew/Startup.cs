@@ -51,7 +51,7 @@ namespace EntityFrameworkMVCNew
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=CricketPlayers}/{action=Index}/{id?}");
             });
         }
     }

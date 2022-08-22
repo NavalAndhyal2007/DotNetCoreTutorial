@@ -149,5 +149,10 @@ namespace EntityFrameworkMVCNew.Controllers
         {
             return _context.CricketPlayers.Any(e => e.Id == id);
         }
+
+        public async Task<int> GetMaxId()
+        {
+            return await _context.CricketPlayers.MaxAsync(u => u.Id);
+        }
     }
 }
